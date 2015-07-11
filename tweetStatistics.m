@@ -1,11 +1,14 @@
+% written by Fei Deng, July 10, 2015, for Insight Data Program.
 close all
 clear all
 
 % count how many tweets in the file (lines).
 if (isunix) 
+% calls wc if running in Linux.
     [~, numstr] = system( ['wc -l ', '<./tweet_input/tweets.txt'] );
     twNumber=str2double(numstr);
 elseif (ispc) 
+% calls perl if running in Windows.
     if exist('countlines.pl','file')~=2
         fid=fopen('countlines.pl','w');
         fprintf(fid,'%s\n%s','while (<>) {};','print $.,"\n";');
@@ -20,7 +23,7 @@ uniquepertw = [];
 % open tweets file and read line by line (tweet by tweet)
 fid = fopen('./tweet_input/tweets.txt');
 
-% count number of unique words for each tw
+% count number of unique words for each tweet
 for n = 1:twNumber
     C = textscan(fid, '%s', 1, 'delimiter', '\n');
     str = C{:};      
@@ -40,7 +43,7 @@ for q = 1 : length(uniquepertw)
     medunique(q) = mean(uniquepertw(1:q));
 end
 
-% count number of unique words for all tws
+% count number of unique words for all tweets
 [ii,jj,kk]=unique(wordspool);
 freq=hist(kk,(1:numel(jj))')';
 D = [ii num2cell(freq)];
@@ -51,11 +54,6 @@ for p = 1: length(freq)
      end
  end
 uniqueintotal;
-
-% show results of features 1 and 2 on screen directly;
-% [ii num2cell(freq)]
-% medunique
-% uniquepertw
 
 % save ft1 and ft2
 if exist('./tweet_output','dir')== 0
