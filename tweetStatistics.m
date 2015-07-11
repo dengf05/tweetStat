@@ -11,7 +11,7 @@ elseif (ispc)
         fprintf(fid,'%s\n%s','while (<>) {};','print $.,"\n";');
         fclose(fid);
     end
-    twNumber=str2double( perl('countlines.pl', 'tweets.txt') );
+    twNumber=str2double( perl('countlines.pl', './tweet_input/tweets.txt') );
 end
 
 wordspool = [];
